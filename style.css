@@ -93,3 +93,19 @@ li{
     border: none;
     box-shadow:1px 1px 5px yellowgreen ;
 }
+@media (max-width:321px){
+    input[type='text']{
+        padding: .9em;
+    }
+    button{
+        padding: .9em;
+        font-weight: 200;
+    }
+    .delete-button{
+        padding: 10px;
+        margin-left: 4px;
+    }
+    .edit-button{
+        padding: 10px;
+    }
+}
