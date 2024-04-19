@@ -1,49 +1,51 @@
-let taskInput=document.getElementById("taskInput")
-let taskList=document.getElementById("taskList")
-let tasks=JSON.parse(localStorage.getItem("tasks")) || [];
+let taskInput = document.getElementById("taskInput");
+let taskList = document.getElementById("taskList");
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-function addTask(){
-    let taskText=taskInput.value.trim()
-    if(taskText === '') return
+displayTask();
 
-    let task={text:taskText}
-    tasks.push(task)
+function addTask() {
+  let taskText = taskInput.value.trim();
+  if (taskText === "") return;
 
-    localStorage.setItem("tasks", JSON.stringify(tasks))
+  let task = { text: taskText };
+  tasks.push(task);
 
-    taskInput.value=''
-    displayTask()
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+
+  taskInput.value = "";
+  displayTask();
 }
 
-function deleteTask(index){
-    tasks.splice(index,1);
+function deleteTask(index) {
+  tasks.splice(index, 1);
 
-    localStorage.setItem("tasks", JSON.stringify(tasks))
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 
+  displayTask();
+}
+
+function editTask(index) {
+  let newTaskText = prompt("Edit Task", tasks[index].text);
+
+  if (newTaskText !== null) {
+    tasks[index].text = newTaskText;
+    localStorage.setItem("tasks", JSON.stringify(tasks));
     displayTask();
+  }
 }
 
-function editTask(index){
-    let newTaskText=prompt("Edit Task", tasks[index].text)
+function displayTask() {
+  taskList.innerHTML = "";
 
-    if (newTaskText !== null) {
-        tasks[index].text= newTaskText
-        localStorage.setItem("tasks", JSON.stringify(tasks))
-        displayTask()
-    }
-}
-
-function displayTask(){
-    taskList.innerHTML=''
-
-    tasks.forEach((e,i) => {
-        let li=document.createElement('li')
-        li.innerHTML=`
+  tasks.forEach((e, i) => {
+    let li = document.createElement("li");
+    li.innerHTML = `
         <span>${e.text}</span>
         <hr/>
         <button onClick='editTask(${i})' class='edit-button' >Edit</button>
         <button onClick='deleteTask(${i})' class='delete-button' >Delete</button>
-        `
-        taskList.appendChild(li)
-    });
+        `;
+    taskList.appendChild(li);
+  });
 }
